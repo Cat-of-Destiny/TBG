@@ -46,4 +46,24 @@ public class Mage extends Character {
 	public void setMaxMana(int mana) {
 		maxMana = mana;
 	}
+	
+	//Print out the spells
+	public void printSpells() {
+		
+		for (int i = 0; i < spells.length; i++) {
+			if (spells[i] != null) {
+				System.out.println(i + ") " + spells[i].getName());
+			}
+		}
+		
+	}
+	
+	//Print out the character's essential data
+	public void printData() {
+		super.printData();
+		System.out.println("You are a mage" +
+		"\nYour spells are:");
+		printSpells();
+	}
+	
 }

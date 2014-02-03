@@ -2,7 +2,11 @@ package mainGame;
 
 import java.util.Random;
 import java.util.Scanner;
+
+import character.Mage;
 import character.Character;
+import character.Soldier;
+import character.Alchemist;
 import library.*;
 //import monsters.Monster;
 
@@ -24,36 +28,14 @@ public class RunGame {
 		 */
 		if (condition == 1) { //Based on the "condition" either display "how to play and rules" or play the game
 			
-			/*
-			 * Character creation
-			 */
-			Character player = new Character(scan); //Create a character
-			chooseBiome(scan, player, gen); //Get the player to select a starting biome
-			player.printData(); //Print out the character's stats
+			int charRef = selectCharacter(scan); //Get which class the user wants to be
 			
-			/*
-			 * Playing
-			 */
-			
-			String currentPlace = Arrays.places[gen.nextInt(Arrays.places.length)];
-			
-			System.out.println("\n\n\n\n\n\n" + "Over on the horizon you see a " + currentPlace + 
-					"\nDo you wish to go there (1 or 2)?"
-					+ "\n1) Yes"
-					+ "\n2) No");
-			int option = scan.nextInt();
-			
-			/*
-			 * Go to first place
-			 */
-			
-			String[] mob = getMonster(player, gen);
-			if (option == 1) {
-				System.out.println("You went to the " + currentPlace + " and found " + 
-								    Arrays.placesDeserted[gen.nextInt(Arrays.placesDeserted.length)] + mob[1]);
-				
-			} else {
-				System.out.println(option);
+			if (charRef == 1) { //If they selected mage, play as mage
+				prePlay("Mage", scan, gen);
+			} else if (charRef == 2) { //If they selected Alchemist, play as alchemist
+				prePlay("Alchemist", scan, gen);
+			} else { //If they selected soldier or it bugged, play as soldier
+				prePlay("Soldier", scan, gen);
 			}
 			
 			
@@ -71,8 +53,74 @@ public class RunGame {
 		
 	}
 	
+	public static void prePlay(String charType, Scanner scan, Random gen) {
+		
+		if (charType == "Mage") {
+			Mage player = new Mage();
+			
+			play(scan, player, gen);
+		}
+		
+		else if (charType == "Alchemist") {
+			Alchemist player = new Alchemist();
+			
+			play(scan, player, gen);
+		}
+		
+		else {
+			Soldier player = new Soldier();
+			
+			play(scan, player, gen);
+		}
+		
+	}
+	
+	private static void play(Scanner scan, Character player, Random gen) {
+		chooseBiome(scan, player, gen); //Get the player to select a starting biome
+		player.printData(); //Print out the character's stats
+		
+		/*
+		 * Playing
+		 */
+		
+		String currentPlace = Arrays.places[gen.nextInt(Arrays.places.length)];
+		
+		System.out.println("\n\n\n\n\n\n" + "Over on the horizon you see a " + currentPlace + 
+				"\nDo you wish to go there (1 or 2)?"
+				+ "\n1) Yes"
+				+ "\n2) No");
+		int option = scan.nextInt();
+		
+		/*
+		 * Go to first place
+		 */
+		
+		String[] mob = getMonster(player, gen); //Return a string with the plural and singular forms of a monster for the current biome, index 0: singular, index 1: plural
+		
+		if (option == 1) { //If they chose to go to the place on the horizon
+			System.out.println("You went to the " + currentPlace + " and found " + 
+							    Arrays.placesDeserted[gen.nextInt(Arrays.placesDeserted.length)] + mob[1]);
+			
+		} else {
+			System.out.println(option);
+		}
+	}
+	
+	//Choose the player's class and character
+	private static int selectCharacter(Scanner scan) {
+		
+		System.out.println("Which class would you like to be (enter the number): " +
+		"\n1) Mage" +
+		"\n2) Alchemist" +
+		"\n3) Soldier");
+		
+		int option = scan.nextInt(3);
+		
+		return option;
+	}
+	
 	//The main menu, where the player selects what to do
-	public static int mainMenu(int condition, Scanner scan) {
+	private static int mainMenu(int condition, Scanner scan) {
 		//Check if the selected option is valid, if true then skip straight to the return statement else run through the selection process
 		if (condition == 0) {
 			System.out.println("What do you want to do? "
