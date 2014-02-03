@@ -13,17 +13,18 @@ public class Mage extends Character {
 	public Mage() {
 		super(new Scanner(System.in)); //Create the default Character
 		
-		spells = initialSpell(spells, new Random()); //Create the inital spell
+		spells = new Spell[9]; //Create the array of nine spells
+		
+		initialSpell(new Random()); //Create the inital spell
 	}
 	
 	//Create the initial spell
-	private Spell[] initialSpell(Spell[] spells, Random gen) {
+	private void initialSpell(Random gen) {
 		
 		Spell initial = new Spell("Firebolt", gen);
 		
 		spells[0] = initial;
 		
-		return spells;
 	}
 	
 	//Return the spells
