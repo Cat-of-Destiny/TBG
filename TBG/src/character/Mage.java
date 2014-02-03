@@ -9,6 +9,7 @@ public class Mage extends Character {
 	Spell[] spells; //The array of the character's spells
 	int mana; //The current amount of mana a player has
 	int maxMana; //The maximum mana a player can have
+	String testCommit;
 	
 	public Mage() {
 		super(new Scanner(System.in)); //Create the default Character
