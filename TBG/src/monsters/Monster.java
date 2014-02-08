@@ -4,7 +4,7 @@ import java.util.Random;
 public class Monster {
 	
 	Random generator;
-	int hp;
+	double hp;
 	int dmgMin;
 	int dmgMax;
 	int speed;
@@ -24,7 +24,7 @@ public class Monster {
 		
 	}
 	
-	public int getHp() {
+	public double getHp() {
 		return hp;
 	}
 	
@@ -42,7 +42,7 @@ public class Monster {
 		return dmg;
 	}
 	
-	public void setHp(int newHp) {
+	public void setHp(double newHp) {
 		hp = newHp;
 	}
 }

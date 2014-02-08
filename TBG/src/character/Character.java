@@ -11,7 +11,8 @@ public class Character {
 	Random generator; //A random number generator
 	int level;
 	int health; //The character's health
-	int strength; //dmg multiplier
+	double strength; //dmg multiplier
+	double resistance;
 	String name; // the characters name
 	HashMap Inventory;
 	Biome currentBiome; //The biome the player is currently in
