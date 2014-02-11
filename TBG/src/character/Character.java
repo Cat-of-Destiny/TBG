@@ -1,6 +1,5 @@
 package character;
 
-import java.util.HashMap;
 import java.util.Random;
 import java.util.Scanner;
 import library.*;
@@ -14,14 +13,17 @@ public class Character {
 	double strength; //dmg multiplier
 	double resistance; //Dmg resistance
 	String name; // the characters name
-	HashMap Inventory;
+	Inventory inventory;
 	Biome currentBiome; //The biome the player is currently in
-	Weapon weapon; //The weapon the player is using
 	int speed;
 	Monster monster;
+	Scanner scanner;
 	
 	
-	public Character(Scanner scanner) {
+	public Character() {
+		
+		scanner = new Scanner(System.in);
+		
 		//Ask the users name
 		System.out.println("Enter the name for your character");
 		System.out.print(">");
@@ -35,15 +37,13 @@ public class Character {
 		strength = generator.nextDouble() + 0.5;
 		
 		//Create the players inventory which has 64 slots
-		Inventory = new HashMap(64);
+		inventory = new Inventory(64);
 		
 		//Default biome
 		currentBiome = new Biome("Start", 1);
 		
 		//Set the level to 1
 		level = 1;
-		
-		weapon = new Weapon("Dagger", 5, false, false);
 		
 		speed = generator.nextInt(10) + 1;
 	}
@@ -73,11 +73,6 @@ public class Character {
 		return currentBiome;
 	}
 	
-	//Method to get the user's weapon
-	public Weapon getWeapon() {
-		return weapon;
-	}
-	
 	public Monster getMonster() {
 		return monster;
 	}
@@ -105,11 +100,6 @@ public class Character {
 		level = newLevel;
 	}
 	
-	//Method to change the weapon
-	public void setWeapon(Weapon newWeapon) {
-		weapon = newWeapon;
-	}
-	
 	//Set the monster the player is fighting
 	public void setMonster(Monster fightingMonster) {
 		monster = fightingMonster;
@@ -118,7 +108,6 @@ public class Character {
 	//Print out the essential character data
 	public void printData() {
 		System.out.println("Your character's name is: " + name +
-				"\nYour character's weapon is: " + weapon.getName() +
 				"\nYour character's health is: " + health +
 				"\nYour character's strength is: " + strength +
 				"\nYou are in the " + currentBiome.getName() + " biome" +

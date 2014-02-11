@@ -1,6 +1,5 @@
 package character;
 
-import java.util.Scanner;
 import java.util.Random;
 import library.Spell;
 import library.Methods;
@@ -12,7 +11,7 @@ public class Mage extends Character {
 	int maxMana; //The maximum mana a player can have
 	
 	public Mage() {
-		super(new Scanner(System.in)); //Create the default Character
+		super(); //Create the default Character
 		
 		spells = new Spell[9]; //Create the array of nine spells
 		
@@ -48,12 +47,15 @@ public class Mage extends Character {
 		maxMana = mana;
 	}
 	
+	public void setMana(int newMana) {
+		mana = newMana;
+	}
 	
 	//Print out the character's essential data
 	public void printData() {
 		super.printData();
-		System.out.println("You are a mage" +
-		"\nYour spells are:");
+		System.out.println("\nYou are a mage" +
+		"\n\nYour spells are:");
 		printSpells();
 	}
 	
