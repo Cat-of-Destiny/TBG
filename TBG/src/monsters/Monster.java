@@ -1,47 +1,62 @@
 package monsters;
+
 import java.util.Random;
 
 public class Monster {
 	
-	Random generator;
-	double hp;
-	int dmgMin;
-	int dmgMax;
-	int speed;
-	String name;
+	Random generator; //A pseudo-random number generator
+	double hp; //Monster's health
+	double strength; //The damage mulitplier of the Monster
+	double resistance; //The Monsters resistance multiplier
+	int dmgMax; //The maximum damage the Monster can deal
+	int speed; //The Monster's speed
+	String name; //The name of the monster
+
 	
+	//Monster constructor, creates a monster with the name monsterName and with speed monsterSpeed
 	public Monster(String monsterName, int monsterSpeed) {
-		generator = new Random();
+		generator = new Random(); //Create the number generator
 		
-		hp = generator.nextInt(10);
+		hp = generator.nextInt(10); //Assign how much health the Monster has
 		
-		dmgMin = generator.nextInt(2);
-		dmgMax = (3 - dmgMin) + 1;
+		dmgMax = generator.nextInt(4); //Assign the maximum damage
 		
-		name = monsterName;
+		//Calculate strength and resistance
+		strength = generator.nextDouble() + 0.5;
+		resistance = generator.nextDouble() + 0.5;
 		
-		speed = monsterSpeed;
+		name = monsterName; //Set the Monster's name
+		
+		speed = monsterSpeed; //Set the Monster's speed
 		
 	}
 	
+	//Method to return the Monster's current health
 	public double getHp() {
 		return hp;
 	}
 	
+	//Method to return the Monster's speed
 	public int getSpeed() {
 		return speed;
 	}
 	
-	public int getDealtDmg() {
-		int dmg = (generator.nextInt(dmgMax) + 1);
-		
-		if (dmg < dmgMin) {
-			dmg = dmgMin;
-		}
-
-		return dmg;
+	//Method to return the Monster's resistance
+	public double getResistance() {
+		return resistance;
 	}
 	
+	//Return the maximum damage of the Monster
+	public int getMaxDmg() {
+		return dmgMax;
+	}
+	
+	//Method to return the Monster's strength
+	public double getStrength() {
+		return strength;
+	}
+	
+	//Method to set the Monster's health
 	public void setHp(double newHp) {
 		hp = newHp;
 	}
