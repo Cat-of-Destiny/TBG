@@ -77,6 +77,7 @@ public class RunGame {
 	
 	private static void play(Scanner scan, Character player, Random gen) {
 		chooseBiome(scan, player, gen); //Get the player to select a starting biome
+		System.out.println("\n\n\n\n\n\n");
 		player.printData(); //Print out the character's stats
 		
 		/*
