@@ -1,10 +1,16 @@
 package monsters;
 
+import library.Attack;
+
 public class Zombie {
 	
-	int dmg;
+	Attack[] attacks;
+	int hp;
+	int strength;
+	int speed;
+	int maxStrength;
 	
-	Zombie(String name) {
+	Zombie(String name, int dmg, int speed, int hp) {
 		
 	}
 	
