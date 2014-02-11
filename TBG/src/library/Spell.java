@@ -7,8 +7,10 @@ public class Spell {
 	String name; //Name of Spell
 	int dmg; //The spell's damage
 	int manaCost; //The cost to cast the spell
+	Random gen;
 	
-	public Spell(String spellName, Random gen) {
+	public Spell(String spellName) {
+		gen = new Random();
 		name = spellName; //Set the spell name
 		
 		int damage = gen.nextInt(3) + 2; //Set the spell damage
