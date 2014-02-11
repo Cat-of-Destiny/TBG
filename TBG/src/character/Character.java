@@ -10,9 +10,9 @@ public class Character {
 	
 	Random generator; //A random number generator
 	int level;
-	int health; //The character's health
+	double health; //The character's health
 	double strength; //dmg multiplier
-	double resistance;
+	double resistance; //Dmg resistance
 	String name; // the characters name
 	HashMap Inventory;
 	Biome currentBiome; //The biome the player is currently in
@@ -32,7 +32,7 @@ public class Character {
 		
 		//Assign health and strength
 		health = generator.nextInt(100);
-		strength = generator.nextInt(2) + 1;
+		strength = generator.nextDouble() + 0.5;
 		
 		//Create the players inventory which has 64 slots
 		Inventory = new HashMap(64);
@@ -54,7 +54,7 @@ public class Character {
 	}
 	
 	//Method to return health
-	public int getHealth() {
+	public double getHealth() {
 		return health;
 	}
 	
@@ -77,9 +77,22 @@ public class Character {
 	public Weapon getWeapon() {
 		return weapon;
 	}
+	
+	public Monster getMonster() {
+		return monster;
+	}
 
 	public int getSpeed() {
 		return speed;
+	}
+	
+	public double getResistance() {
+		return resistance;
+	}
+	
+	//Method to set the player's health
+	public void setHealth(double newHealth) {
+		health = newHealth;
 	}
 	
 	//Method to set the biome the player is in
@@ -110,38 +123,5 @@ public class Character {
 				"\nYour character's strength is: " + strength +
 				"\nYou are in the " + currentBiome.getName() + " biome" +
 				"\nYou are level: " + level);
-	}
-	
-	//If returns false the player lost, if true the player wins
-	public boolean fight() {
-
-		//Print out the monster's health and player's health
-		System.out.println("The monser's health is on: " + monster.getHp()
-				+ "\nYour health is on: " + health + "\n");
-		
-		//While your's and the monster's health are above zero do the fighting
-		while (health > 0 && monster.getHp() > 0) {
-			
-			//Check who to attack first
-			if (speed > monster.getSpeed()) {
-				monster.setHp(monster.getHp() - (weapon.getDmg() * strength));
-				health -= monster.getDealtDmg();
-				System.out.println("The monser's health is on: " + monster.getHp()
-						+ "\nYour health is on: " + health + "\n");
-			} else {
-				health -= monster.getDealtDmg();
-				monster.setHp(monster.getHp() - (weapon.getDmg() * strength));
-				System.out.println("The monser's health is on: " + monster.getHp()
-						+ "\nYour health is on: " + health + "\n");
-			}
-			
-		}
-		
-		//Check who wins
-		if (health < 0) {
-			return false;
-		} else {
-			return true;
-		}
 	}
 }
