@@ -2,13 +2,11 @@ package mainGame;
 
 import java.util.Random;
 import java.util.Scanner;
-
 import character.Mage;
 import character.Character;
 import character.Soldier;
-import character.Alchemist;
+import character.Necromancer;
 import library.*;
-//import monsters.Monster;
 
 public class RunGame {
 	
@@ -61,8 +59,8 @@ public class RunGame {
 			play(scan, player, gen);
 		}
 		
-		else if (charType == "Alchemist") {
-			Alchemist player = new Alchemist();
+		else if (charType == "Necromancer") {
+			Necromancer player = new Necromancer();
 			
 			play(scan, player, gen);
 		}
