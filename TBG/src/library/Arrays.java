@@ -28,4 +28,6 @@ public class Arrays {
 											  {"Hobgoblins", "Fire Ghosts", "Wrecking Trolls", "Pyromatic Wizards", "Knights of the flames"}, //Mountains
 											  {"Sea dragon", "Aquatic Horses", "Serpents of Illusion", "Water Mages", "Knights of the sea"}, //Island
 											  {"Primeval Trolls", "Fungal Oaks", "Festering Maggots", "Growth Mages", "Knights of the living"}}; //Forest
+	
+	public static String[] attackNames = {"Take Down", "Crescent Kick", "Body Slam", "Tackle", "Triple Kick"};
 }
