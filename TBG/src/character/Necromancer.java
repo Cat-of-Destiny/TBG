@@ -18,4 +18,8 @@ public class Necromancer extends Character{
 		
 	}
 	
+	public Zombie[] getZombies() {
+		return zombies;
+	}
+	
 }
