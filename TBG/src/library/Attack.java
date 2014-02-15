@@ -10,10 +10,10 @@ public class Attack {
 	int fatigue; //How much will the user be fatigued by using the attack
 	
 	
-	Attack(String name, int level) {
+	public Attack(int level) {
 		
 		gen = new Random(); //New random number generator
-		this.name = name; //The name of the attack
+		this.name = Arrays.attackNames[gen.nextInt(Arrays.attackNames.length)]; //The name of the attack
 		dmg = gen.nextInt(level * 6); //The damage of the attakc
 		fatigue = ((dmg / 2) / (gen.nextInt(3) + 1)) + 1; //How much it tires the user
 		
