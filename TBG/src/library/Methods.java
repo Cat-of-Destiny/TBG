@@ -14,6 +14,12 @@ public class Methods {
 	private static Scanner scan;
 
 	//Method to return the damage a mob deals 
+	/*
+	 * Calculation:
+	 * 
+	 * Get number up to the maxWeaponDmg and add 2
+	 * Multiply that number by the resistance added to the multiplier divided by 2
+	 */
 	public static double calcDmg(int maxWeaponDmg, double resistance, double dmgMultiplier) {
 		
 		Random gen = new Random();
@@ -23,7 +29,6 @@ public class Methods {
 		double dmgTaken = weaponDmg * ((resistance + dmgMultiplier) / 2);
 		
 		return dmgTaken;
-		
 	}
 	
 	
