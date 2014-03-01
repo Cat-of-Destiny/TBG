@@ -6,10 +6,11 @@ import java.util.Random;
 public class Zombie {
 	
 	Attack[] attacks; //An array of the zombies attacks
-	int hp; //The zombies health
+	double hp; //The zombies health
 	int strength; //The resistance to fatigue the zombie has
 	int speed; //The speed of the zombie
 	int maxStrength; //The maximum resistance to fatigue the zombie has
+	double resistance; //The zombies resistance to damage
 	String name; //The name of the zombie
 	
 	/**
@@ -44,6 +45,22 @@ public class Zombie {
 	}
 	
 	/**
+	 * Method to return the zombie's speed
+	 * @return the zombie's speed
+	 */
+	public int getSpeed() {
+		return speed;
+	}
+	
+	/**
+	 * Method to return the name of the zombie
+	 * @return the name of the zombie
+	 */
+	public String getName() {
+		return name;
+	}
+	
+	/**
 	 * Method to return the attacks the zombie has
 	 * @return an array of the attacks the zombie has
 	 */
@@ -55,7 +72,7 @@ public class Zombie {
 	 * Method to return the zombie's hp
 	 * @return the zombie's current hp 
 	 */
-	public int getHp() {
+	public double getHp() {
 		return hp;
 	}
 	
@@ -65,5 +82,13 @@ public class Zombie {
 	 */
 	public int getStrength() {
 		return strength;
+	}
+	
+	/**
+	 * Method to set health of Zombie
+	 * @param newHealth, the new health for the zombie
+	 */
+	public void setHealth(double newHealth) {
+		hp = newHealth;
 	}
 }

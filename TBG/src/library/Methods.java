@@ -1,14 +1,18 @@
 package library;
 
 import java.util.Random;
+import java.util.Scanner;
 
-import character.*;
-import character.Character;
 import monsters.*;
+import character.Character;
+import character.Mage;
+import character.Necromancer;
 
 public class Methods {
 	
 	
+	private static Scanner scan;
+
 	//Method to return the damage a mob deals 
 	public static double calcDmg(int maxWeaponDmg, double resistance, double dmgMultiplier) {
 		
@@ -25,6 +29,8 @@ public class Methods {
 	
 	public static boolean fight(Character player) {
 		
+		scan = new Scanner(System.in);
+		
 		//Weapon weapon = player.getWeapon();
 		Monster monster = player.getMonster();
 		
@@ -33,25 +39,52 @@ public class Methods {
 				+ "\nYour health is on: " + player.getHealth() + "\n");
 		
 		//While your's and the monster's health are above zero do the fighting
-		while (player.getHealth() > 0 && monster.getHp() > 0) {
-			
+		
 			if (player instanceof Mage) {
 				
-				//Check who to attack first
-				if (player.getSpeed() > monster.getSpeed()) {
-					Spell currentSpell = selectSpell((Mage) player);
-					monster.setHp(Methods.calcDmg(currentSpell.getDmg(), monster.getResistance(), player.getStrength())); //Change the Monster's hp by the damage dealt
-					player.setHealth(Methods.calcDmg(monster.getMaxDmg(), player.getResistance(), monster.getStrength())); //Change the player's hp by the damage dealt
+				while (player.getHealth() > 0 && monster.getHp() > 0) {
+				
+					//Check who to attack first
+					if (player.getSpeed() > monster.getSpeed()) {
+						Spell currentSpell = selectSpell((Mage) player);
+						monster.setHp(Methods.calcDmg(currentSpell.getDmg(), monster.getResistance(), player.getStrength())); //Change the Monster's hp by the damage dealt
+						player.setHealth(Methods.calcDmg(monster.getMaxDmg(), player.getResistance(), monster.getStrength())); //Change the player's hp by the damage dealt
+					}
+					
+					else {
+						Spell currentSpell = selectSpell((Mage) player);
+						player.setHealth(Methods.calcDmg(monster.getMaxDmg(), player.getResistance(), monster.getStrength())); //Change the player's hp by the damage dealt
+						monster.setHp(Methods.calcDmg(currentSpell.getDmg(), monster.getResistance(), player.getStrength())); //Change the Monster's hp by the damage dealt
+					}
+			
 				}
 				
-				else {
-					Spell currentSpell = selectSpell((Mage) player);
-					player.setHealth(Methods.calcDmg(monster.getMaxDmg(), player.getResistance(), monster.getStrength())); //Change the player's hp by the damage dealt
-					monster.setHp(Methods.calcDmg(currentSpell.getDmg(), monster.getResistance(), player.getStrength())); //Change the Monster's hp by the damage dealt
-				}
-			
 			}
-		}
+			
+			if (player instanceof Necromancer) {
+				
+				Attack currentAttack;
+				
+				System.out.println("Which zombie do you want to use (enter the number)");
+				printZombies((Necromancer) player);
+				int zombieIndex = scan.nextInt();
+				Zombie currentZombie = chooseZombie((Necromancer) player, zombieIndex); 
+				
+				while (currentZombie.getHp() > 0 && monster.getHp() > 0) {
+					
+					if (currentZombie.getSpeed() > monster.getSpeed()) {
+						currentAttack = selectAttack(currentZombie);
+						monster.setHp(Methods.calcDmg(currentAttack.getDmg(), monster.getResistance(), player.getStrength()));
+						currentZombie.setHealth(Methods.calcDmg(monster.getMaxDmg(), currentZombie.getStrength(), monster.getStrength()));
+					}
+					
+					else {
+						currentAttack = selectAttack(currentZombie);
+						currentZombie.setHealth(Methods.calcDmg(monster.getMaxDmg(), currentZombie.getStrength(), monster.getStrength()));
+						monster.setHp(Methods.calcDmg(currentAttack.getDmg(), monster.getResistance(), player.getStrength()));
+					}
+				}
+			}
 		
 		//Check who wins
 		if (player.getHealth() < 0) {
@@ -61,6 +94,50 @@ public class Methods {
 		}
 	}
 	
+	private static Attack selectAttack(Zombie zombie) {
+		
+		Attack[] attacks = zombie.getAttacks();
+		scan = new Scanner(System.in);
+		
+		System.out.println("Choose the attack (enter the number):");
+		
+		for (int i = 0; i < attacks.length; i++) {
+			System.out.println(i + ") " + attacks[i].getName());
+		}
+		
+		int attackIndex = scan.nextInt();
+		
+		Attack chosenAttack = attacks[attackIndex];
+		
+		return chosenAttack;
+	}
+	
+	private static void printZombies(Necromancer player) {
+		
+		Zombie[] zombies = player.getZombies();
+		
+		for (int i = 0; i < zombies.length; i++) {
+			System.out.println(i + zombies[i].getName());
+		}
+		
+	}
+	
+	private static Zombie chooseZombie(Necromancer player, int zombieIndex) {
+		
+		Zombie[] zombies = player.getZombies();
+		
+		Zombie zombie;
+		
+		if (zombieIndex > -1 && zombieIndex < zombies.length && zombies[zombieIndex] != null) {
+			zombie = zombies[zombieIndex];
+		} else {
+			zombie = zombies[0];
+		}
+		
+		return zombie;
+	}
+
+
 	public static Spell selectSpell(Mage player) {
 		
 		/*
