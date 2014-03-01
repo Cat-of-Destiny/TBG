@@ -4,10 +4,9 @@ import java.util.Random;
 
 import library.Arrays;
 
-public class Weapon {
+public class Weapon extends Item {
 
 	Random gen;
-	String name;
 	int dmg;
 	boolean isBroken;
 	
@@ -20,6 +19,8 @@ public class Weapon {
 	 * @param broken, if the weapon is broken
 	 */
 	public Weapon(String typeOfWeapon, int maxDmg, boolean goodWeapon, boolean broken) {
+		
+		super(typeOfWeapon);
 		
 		gen = new Random();
 		
@@ -50,6 +51,7 @@ public class Weapon {
 		dmg = newDmg;
 	}
 	
+	@Override
 	public void setName(String newName) {
 		name = newName;
 	}
