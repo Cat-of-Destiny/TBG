@@ -1,15 +1,33 @@
 package library;
 
+import items.Weapon;
+
 import java.util.Random;
 import java.util.Scanner;
 
-import monsters.*;
+import monsters.Monster;
+import monsters.Zombie;
 import character.Character;
 import character.Mage;
 import character.Necromancer;
+import character.Soldier;
 
 public class Methods {
 	
+	public static void main(String[] args) {
+		Soldier mySold = new Soldier();
+		
+		mySold.setMonster(new Monster("test", 3));
+		mySold.addWeapon(new Weapon("Name", 10, true, false), 1);
+		
+		boolean won = fight(mySold);
+		
+		if (won) {
+			System.out.println("You won!");
+		} else {
+			System.out.println("You lost!");
+		}
+	}
 	
 	private static Scanner scan;
 
@@ -31,66 +49,106 @@ public class Methods {
 		return dmgTaken;
 	}
 	
-	
 	public static boolean fight(Character player) {
 		
 		scan = new Scanner(System.in);
 		
-		//Weapon weapon = player.getWeapon();
 		Monster monster = player.getMonster();
 		
 		//Print out the monster's health and player's health
-		System.out.println("The monser's health is on: " + monster.getHp()
+		System.out.println("\nThe monster's health is on: " + monster.getHp()
 				+ "\nYour health is on: " + player.getHealth() + "\n");
 		
 		//While your's and the monster's health are above zero do the fighting
-		
-			if (player instanceof Mage) {
+		if (player instanceof Mage) {
+
+			while (player.getHealth() > 0 && monster.getHp() > 0) {
+
+				//Check who to attack first
+				if (player.getSpeed() > monster.getSpeed()) {
+					Spell currentSpell = selectSpell((Mage) player);
+					monster.setHp(Methods.calcDmg(currentSpell.getDmg(), monster.getResistance(), player.getStrength())); //Change the Monster's hp by the damage dealt
+					player.setHealth(Methods.calcDmg(monster.getMaxDmg(), player.getResistance(), monster.getStrength())); //Change the player's hp by the damage dealt
+				}
+
+				else {
+					Spell currentSpell = selectSpell((Mage) player);
+					player.setHealth(Methods.calcDmg(monster.getMaxDmg(), player.getResistance(), monster.getStrength())); //Change the player's hp by the damage dealt
+					monster.setHp(Methods.calcDmg(currentSpell.getDmg(), monster.getResistance(), player.getStrength())); //Change the Monster's hp by the damage dealt
+				}
+
+			}
+
+		}
+
+		else if (player instanceof Necromancer) {
+
+			Attack currentAttack;
+
+			System.out.println("Which zombie do you want to use (enter the number)");
+			printZombies((Necromancer) player);
+			int zombieIndex = scan.nextInt();
+			Zombie currentZombie = chooseZombie((Necromancer) player, zombieIndex); 
+
+			while (currentZombie.getHp() > 0 && monster.getHp() > 0) {
+
+				if (currentZombie.getSpeed() > monster.getSpeed()) {
+					currentAttack = selectAttack(currentZombie);
+					monster.setHp(Methods.calcDmg(currentAttack.getDmg(), monster.getResistance(), player.getStrength()));
+					currentZombie.setHealth(Methods.calcDmg(monster.getMaxDmg(), currentZombie.getStrength(), monster.getStrength()));
+				}
+
+				else {
+					currentAttack = selectAttack(currentZombie);
+					currentZombie.setHealth(Methods.calcDmg(monster.getMaxDmg(), currentZombie.getStrength(), monster.getStrength()));
+					monster.setHp(Methods.calcDmg(currentAttack.getDmg(), monster.getResistance(), player.getStrength()));
+				}
+			}
+		}
+
+		else if (player instanceof Soldier) {
+
+			while (player.getHealth() > 0 && monster.getHp() > 0) {
 				
-				while (player.getHealth() > 0 && monster.getHp() > 0) {
+				Weapon weapon = selectWeapon( ((Soldier)player) );
 				
+				Weapon currentWeapon = ((Soldier)player).getWeapon();
+				Weapon oldWeapon = ((Soldier)player).getOldWeapon();
+				
+				if (!weapon.equals(oldWeapon)) {
+					
 					//Check who to attack first
 					if (player.getSpeed() > monster.getSpeed()) {
-						Spell currentSpell = selectSpell((Mage) player);
-						monster.setHp(Methods.calcDmg(currentSpell.getDmg(), monster.getResistance(), player.getStrength())); //Change the Monster's hp by the damage dealt
-						player.setHealth(Methods.calcDmg(monster.getMaxDmg(), player.getResistance(), monster.getStrength())); //Change the player's hp by the damage dealt
+						//monster.setHp(monster.getHp() - Methods.calcDmg(currentWeapon.getDmg(), monster.getResistance(), player.getStrength())); //Change the Monster's hp by the damage dealt
+						player.setHealth(player.getHealth() - Methods.calcDmg(monster.getMaxDmg(), player.getResistance(), monster.getStrength())); //Change the player's hp by the damage dealt
+						((Soldier) player).setOldWeapon(null);
+					}
+
+					else {
+						//player.setHealth(player.getHealth() - Methods.calcDmg(monster.getMaxDmg(), player.getResistance(), monster.getStrength())); //Change the player's hp by the damage dealt
+						monster.setHp(monster.getHp() - Methods.calcDmg(currentWeapon.getDmg(), monster.getResistance(), player.getStrength())); //Change the Monster's hp by the damage dealt
+						((Soldier) player).setOldWeapon(null);
 					}
 					
-					else {
-						Spell currentSpell = selectSpell((Mage) player);
-						player.setHealth(Methods.calcDmg(monster.getMaxDmg(), player.getResistance(), monster.getStrength())); //Change the player's hp by the damage dealt
-						monster.setHp(Methods.calcDmg(currentSpell.getDmg(), monster.getResistance(), player.getStrength())); //Change the Monster's hp by the damage dealt
+				} else {
+					
+					if (player.getSpeed() > monster.getSpeed()) {
+						monster.setHp(monster.getHp() - Methods.calcDmg(currentWeapon.getDmg(), monster.getResistance(), player.getStrength())); //Change the Monster's hp by the damage dealt
+						player.setHealth(player.getHealth() - Methods.calcDmg(monster.getMaxDmg(), player.getResistance(), monster.getStrength())); //Change the player's hp by the damage dealt
 					}
-			
+
+					else {
+						player.setHealth(player.getHealth() - Methods.calcDmg(monster.getMaxDmg(), player.getResistance(), monster.getStrength())); //Change the player's hp by the damage dealt
+						monster.setHp(monster.getHp() - Methods.calcDmg(currentWeapon.getDmg(), monster.getResistance(), player.getStrength())); //Change the Monster's hp by the damage dealt
+					}
+					
 				}
 				
+				System.out.println(monster.getHp() + " : " + player.getHealth() + "\n");
 			}
-			
-			if (player instanceof Necromancer) {
-				
-				Attack currentAttack;
-				
-				System.out.println("Which zombie do you want to use (enter the number)");
-				printZombies((Necromancer) player);
-				int zombieIndex = scan.nextInt();
-				Zombie currentZombie = chooseZombie((Necromancer) player, zombieIndex); 
-				
-				while (currentZombie.getHp() > 0 && monster.getHp() > 0) {
-					
-					if (currentZombie.getSpeed() > monster.getSpeed()) {
-						currentAttack = selectAttack(currentZombie);
-						monster.setHp(Methods.calcDmg(currentAttack.getDmg(), monster.getResistance(), player.getStrength()));
-						currentZombie.setHealth(Methods.calcDmg(monster.getMaxDmg(), currentZombie.getStrength(), monster.getStrength()));
-					}
-					
-					else {
-						currentAttack = selectAttack(currentZombie);
-						currentZombie.setHealth(Methods.calcDmg(monster.getMaxDmg(), currentZombie.getStrength(), monster.getStrength()));
-						monster.setHp(Methods.calcDmg(currentAttack.getDmg(), monster.getResistance(), player.getStrength()));
-					}
-				}
-			}
-		
+
+		}
+
 		//Check who wins
 		if (player.getHealth() < 0) {
 			return false;
@@ -99,6 +157,27 @@ public class Methods {
 		}
 	}
 	
+	private static Weapon selectWeapon(Soldier soldier) {
+		
+		scan = new Scanner(System.in);
+		
+		System.out.println("If you switch to a different weapon you will deal no damage to the monster this turn.\nSelect which weapon you would like to use (enter the number): ");
+		soldier.printWeapons();
+		
+		int selected = scan.nextInt();
+		
+		Weapon finalWeapon = soldier.getWeapons().getWeapon(selected);
+		
+		if (finalWeapon != null) {
+			soldier.setOldWeapon(soldier.getWeapon());
+			soldier.setWeapon(finalWeapon);
+			return finalWeapon;
+		} else {
+			return soldier.getWeapon();
+		}
+		
+	}
+
 	private static Attack selectAttack(Zombie zombie) {
 		
 		Attack[] attacks = zombie.getAttacks();
