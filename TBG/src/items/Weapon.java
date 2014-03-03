@@ -30,7 +30,7 @@ public class Weapon extends Item {
 			name = Arrays.badAdjectives[gen.nextInt(Arrays.goodAdjectives.length)] + " " + typeOfWeapon;
 		}
 		
-		dmg = gen.nextInt(maxDmg);
+		dmg = gen.nextInt(maxDmg) + 1;
 		
 		isBroken = broken;
 	}

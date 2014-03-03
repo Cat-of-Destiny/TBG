@@ -17,9 +17,10 @@ public class Monster {
 	public Monster(String monsterName, int monsterSpeed) {
 		generator = new Random(); //Create the number generator
 		
-		hp = generator.nextInt(10); //Assign how much health the Monster has
+		//TODO Fix hp should be 10
+		hp = generator.nextInt(100); //Assign how much health the Monster has
 		
-		dmgMax = generator.nextInt(4); //Assign the maximum damage
+		dmgMax = generator.nextInt(4) + 1; //Assign the maximum damage
 		
 		//Calculate strength and resistance
 		strength = generator.nextDouble() + 0.5;
