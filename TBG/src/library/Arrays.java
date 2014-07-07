@@ -18,13 +18,13 @@ public class Arrays {
 	
 	//Different monsters for each biome
 	public static String[][] monstersSing = {{"Glowing Spirit", "Field-Orc", "Purified Thought", "White Wizard", "Knight of justice"}, //Plains
-											{"Bloodsucker Vampire", "Disembodied Zombie", "Necromancer", "Black Wizard", "Knight of the dead"}, //Swamp
+											{"Bloodsucking Vampire", "Disembodied Zombie", "Necromancer", "Black Wizard", "Knight of the dead"}, //Swamp
 											{"Hobgoblin", "Fire Ghost", "Wrecking Troll", "Pyromatic Wizard", "Knight of the flames"}, //Mountains
 											{"Sea dragon", "Aquatic Horse", "Serpent of Illusion", "Water Mage", "Knight of the sea"}, //Island
 											{"Primeval Troll", "Fungal Oak", "Festering Maggot", "Growth Mage", "Knight of the living"}}; //Forest
 	
 	public static String[][] monstersPlural = {{"Glowing Spirits", "Field-Orcs", "Purified Thoughts", "White Wizards", "Knights of justice"}, //Plains
-											  {"Bloodsucker Vampires", "Disembodied Zombies", "Necromancers", "Black Wizards", "Knights of the dead"}, //Swamp
+											  {"Bloodsucking Vampires", "Disembodied Zombies", "Necromancers", "Black Wizards", "Knights of the dead"}, //Swamp
 											  {"Hobgoblins", "Fire Ghosts", "Wrecking Trolls", "Pyromatic Wizards", "Knights of the flames"}, //Mountains
 											  {"Sea dragon", "Aquatic Horses", "Serpents of Illusion", "Water Mages", "Knights of the sea"}, //Island
 											  {"Primeval Trolls", "Fungal Oaks", "Festering Maggots", "Growth Mages", "Knights of the living"}}; //Forest

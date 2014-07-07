@@ -51,29 +51,29 @@ public class RunGame {
 		
 	}
 	
-	public static void prePlay(String charType, Scanner scan, Random gen) {
+	public static void prePlay(String charType, Scanner scan, Random gen) { //Parameters: Character type, Scanner and a random number generator
 		
 		if (charType == "Mage") {
 			Mage player = new Mage();
 			
-			play(scan, player, gen);
+			play(scan, player, gen, "Mage");
 		}
 		
 		else if (charType == "Necromancer") {
 			Necromancer player = new Necromancer();
 			
-			play(scan, player, gen);
+			play(scan, player, gen, "Necromancer");
 		}
 		
 		else {
 			Soldier player = new Soldier();
 			
-			play(scan, player, gen);
+			play(scan, player, gen, "Soldier");
 		}
 		
 	}
 	
-	private static void play(Scanner scan, Character player, Random gen) {
+	private static void play(Scanner scan, Character player, Random gen, String characterClass) { //Parameters: Scanner, Player object, Random number generator and the class of the player object
 		chooseBiome(scan, player, gen); //Get the player to select a starting biome
 		System.out.println("\n\n\n\n\n\n");
 		player.printData(); //Print out the character's stats
@@ -100,9 +100,32 @@ public class RunGame {
 			System.out.println("You went to the " + currentPlace + " and found " + 
 							    Arrays.placesDeserted[gen.nextInt(Arrays.placesDeserted.length)] + mob[1]);
 			
-		} else {
+			selectActionEnterCombat(characterClass, mob, scan, gen, player);
+			
+		} else { 
+			//TODO Implement something to do if they choose not to go to the place
 			System.out.println(option);
 		}
+	}
+	
+	//Call this when a player needs to make a decision 
+	private static void selectActionEnterCombat(String charClass, String[] mob, Scanner scan, Random gen, Character player) { // Parameters: The character's class
+		if (charClass == "Mage") {
+			System.out.println("The leader of the " + mob[1] + " turns round and looks at you,\n\nDo you either:\n1) Engage in combat with a mob of " + mob[1] + "\n2) Run for your life?"); //Give the player an option of engaging in combat or running
+			int selection = scan.nextInt();
+			if (selection == 1) {
+				
+			} else {
+				System.out.println("You escape the " + mob[1] + " and leave the biome you are currently in.");
+				play(scan, player, gen, "Mage");
+			}
+		} else if (charClass == "Necromancer") {
+			//TODO Implement NEcromancer and Soldier Capability
+		} else {
+			
+		}
+		
+		
 	}
 	
 	//Choose the player's class and character
