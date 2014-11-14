@@ -1,3 +1,5 @@
+//Test git is working
+
 package mainGame;
 
 import java.util.Random;
