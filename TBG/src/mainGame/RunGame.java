@@ -140,6 +140,7 @@ public class RunGame {
 				
 			} else {
 				System.out.println("You escape the " + mob[1] + " and leave the biome you are currently in.");
+				System.out.println("Good Job!");
 				play(scan, player, gen, "Mage");
 			}
 		} else if (charClass == "Necromancer") {
