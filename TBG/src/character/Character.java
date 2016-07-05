@@ -10,7 +10,7 @@ import monsters.Monster;
 
 public class Character {
 	
-	
+	int exp; //The Character's work towards the next level
 	int level; //The character's level
 	int speed; //The character's speed in combat
 	double health; //The character's health
@@ -74,6 +74,16 @@ public class Character {
 		
 	}
 	
+	//Method to add exp to a player
+	public void addExp(int amount) {
+		this.exp += amount;
+	}
+	
+	//Method to return the player's exp
+	public int getExp() {
+		return exp;
+	}
+	
 	//Method to return the player's level
 	public int getLevel() {
 		return level;
@@ -112,6 +122,11 @@ public class Character {
 	//Return the resistance of the character
 	public double getResistance() {
 		return resistance;
+	}
+	
+	//Method to set the player's exp to the parameter
+	public void setExp(int newExp) {
+		this.exp = newExp;
 	}
 	
 	//Method to set the player's level to the parameter
@@ -164,6 +179,7 @@ public class Character {
 				"\nYour character's health is: " + health +
 				"\nYour character's strength is: " + strength +
 				"\nYou are in the " + currentBiome.getName() + " biome" +
+				"\nYour current exp is: " + exp +
 				"\nYou are level: " + level);
 	}
 
