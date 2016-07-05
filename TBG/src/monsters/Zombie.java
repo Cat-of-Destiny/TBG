@@ -33,7 +33,7 @@ public class Zombie {
 	}
 	
 	/**
-	 * Initialises the zombies attacks
+	 * Initialises the zombie's attacks
 	 * @param playerLevel, the amount of attacks the zombie can have, equal to the player's level 
 	 */
 	private void initialiseAttacks(int playerLevel) {
