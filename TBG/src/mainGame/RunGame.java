@@ -1,18 +1,21 @@
-//Test git is working
-
 package mainGame;
 
 import java.util.Random;
 import java.util.Scanner;
-import character.Mage;
+
+import library.Arrays;
+import library.Methods;
+import library.Biome;
+import monsters.Monster;
 import character.Character;
-import character.Soldier;
+import character.Mage;
 import character.Necromancer;
-import library.*;
+import character.Soldier;
 
 public class RunGame {
 	
 	public static void main(String[] args) {
+		
 		Scanner scan = new Scanner(System.in);
 		Random gen = new Random();
 		
@@ -105,6 +108,7 @@ public class RunGame {
 			selectActionEnterCombat(characterClass, mob, scan, gen, player);
 			
 		} else { 
+			
 			//TODO Implement something to do if they choose not to go to the place
 			System.out.println(option);
 		}
@@ -116,6 +120,23 @@ public class RunGame {
 			System.out.println("The leader of the " + mob[1] + " turns round and looks at you,\n\nDo you either:\n1) Engage in combat with a mob of " + mob[1] + "\n2) Run for your life?"); //Give the player an option of engaging in combat or running
 			int selection = scan.nextInt();
 			if (selection == 1) {
+				
+				Monster fightingMonster = new Monster(mob[0], 1); //Create the Monster the player will now fight
+				player.setMonster(fightingMonster); //Set the monster the player is fighting
+				
+				boolean won = Methods.fight(player);
+				
+				if (won) {
+					
+					int monsterDifficulty = player.getMonster().getDifficulty();
+					int expGained = monsterDifficulty * 3;
+					player.addExp(expGained);
+					player.printData();
+					
+				} else {
+					System.out.println("YOU LOSE!");
+					mainMenu(0, scan);
+				}
 				
 			} else {
 				System.out.println("You escape the " + mob[1] + " and leave the biome you are currently in.");

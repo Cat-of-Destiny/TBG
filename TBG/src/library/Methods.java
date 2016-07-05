@@ -14,21 +14,6 @@ import character.Soldier;
 
 public class Methods {
 	
-	public static void main(String[] args) {
-		Soldier mySold = new Soldier();
-		
-		mySold.setMonster(new Monster("test", 3));
-		mySold.addWeapon(new Weapon("Name", 10, true, false), 1);
-		
-		boolean won = fight(mySold);
-		
-		if (won) {
-			System.out.println("You won!");
-		} else {
-			System.out.println("You lost!");
-		}
-	}
-	
 	private static Scanner scan;
 
 	//Method to return the damage a mob deals 
@@ -66,12 +51,14 @@ public class Methods {
 
 				//Check who to attack first
 				if (player.getSpeed() > monster.getSpeed()) {
+					System.out.println("Hey");
 					Spell currentSpell = selectSpell((Mage) player);
 					monster.setHp(Methods.calcDmg(currentSpell.getDmg(), monster.getResistance(), player.getStrength())); //Change the Monster's hp by the damage dealt
 					player.setHealth(Methods.calcDmg(monster.getMaxDmg(), player.getResistance(), monster.getStrength())); //Change the player's hp by the damage dealt
 				}
 
 				else {
+					System.out.println("Hey2");
 					Spell currentSpell = selectSpell((Mage) player);
 					player.setHealth(Methods.calcDmg(monster.getMaxDmg(), player.getResistance(), monster.getStrength())); //Change the player's hp by the damage dealt
 					monster.setHp(Methods.calcDmg(currentSpell.getDmg(), monster.getResistance(), player.getStrength())); //Change the Monster's hp by the damage dealt

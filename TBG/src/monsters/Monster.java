@@ -10,6 +10,7 @@ public class Monster {
 	double resistance; //The Monsters resistance multiplier
 	int dmgMax; //The maximum damage the Monster can deal
 	int speed; //The Monster's speed
+	int difficulty; //The difficulty of the Monster currently being fought
 	String name; //The name of the monster
 
 	
@@ -29,6 +30,7 @@ public class Monster {
 		
 		speed = monsterSpeed; //Set the Monster's speed
 		
+		difficulty = (int) Math.round(hp + dmgMax + strength + resistance + speed); // How difficult the monster is to fight, the higher the number the harder it is to fight
 	}
 	
 	//Method to return the Monster's current health
@@ -54,6 +56,11 @@ public class Monster {
 	//Method to return the Monster's strength
 	public double getStrength() {
 		return strength;
+	}
+	
+	//Method to return the Monster's difficulty
+	public int getDifficulty() {
+		return difficulty;
 	}
 	
 	//Method to set the Monster's health
